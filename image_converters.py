@@ -8,8 +8,11 @@ def b64_bytes_to_png_file(b64_bytes: bytes, file_name: str) -> None:
     """
     function stores a *.png- file locally for a given base64- bytestring
     """
-    # write b64_bytes into buffer
-    buffer = io.BytesIO(b64_bytes)
+    # decode base64- bytestring into bytes object
+    bytes_object = base64.b64decode(b64_bytes)
+
+    # write into buffer    
+    buffer = io.BytesIO(bytes_object)
 
     # create and save image locally
     im = Image.open(buffer)
@@ -42,10 +45,7 @@ def image_string_to_b64_bytes(image_string: str) -> bytes:
     # split image string and keep the actual image
     image_data = image_string.split(',')[1]
 
-    # convert into bas64- bytes
-    b64_bytes = base64.b64decode(image_data)
-
-    return b64_bytes
+    return image_data.encode('utf-8')
 
 
 def b64_bytes_to_image_string(b64_bytes: bytes) -> str:
@@ -92,8 +92,12 @@ def b64_bytes_to_image_array(b64_bytes: bytes) -> np.ndarray:
     """
     function converts a base64- bytestring to a numpy array using PIL
     """
+    # decode base64- bytestring into bytes object
+    bytes_object = base64.b64decode(b64_bytes)
+    
+    # create PIL Image
     im = Image.open(
-        io.BytesIO(b64_bytes)
+        io.BytesIO(bytes_object)
     )
 
     return np.array(im)
