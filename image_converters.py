@@ -8,11 +8,8 @@ def b64_bytes_to_png_file(b64_bytes: bytes, file_name: str) -> None:
     """
     function stores a *.png- file locally for a given base64- bytestring
     """
-    # decode base64- bytestring into bytes object
-    bytes_object = base64.decodebytes(b64_bytes)
-
-    # write into buffer
-    buffer = io.BytesIO(bytes_object)
+    # write b64_bytes into buffer
+    buffer = io.BytesIO(b64_bytes)
 
     # create and save image locally
     im = Image.open(buffer)
